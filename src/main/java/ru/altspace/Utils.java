@@ -4,9 +4,6 @@ import java.util.logging.Logger;
 
 public class Utils {
 
-    private Logger logger;
+    private static Logger logger = Logger.getLogger("AltEconomy");
 
-    public Logger getLogger() {
-        return logger;
-    }
 }
