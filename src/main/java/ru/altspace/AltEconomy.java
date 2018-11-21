@@ -2,6 +2,8 @@ package ru.altspace;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
+
 public class AltEconomy extends JavaPlugin {
 
     Utils util = new Utils();
@@ -10,7 +12,11 @@ public class AltEconomy extends JavaPlugin {
     @Override
     public void onEnable() {
         loadConfig();
-        network.createConnection();
+        try {
+            network.createConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         util.getLogger().info("Плагин включен!!");
     }
 

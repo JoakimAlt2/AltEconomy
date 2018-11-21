@@ -1,9 +1,6 @@
 package ru.altspace;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 
 public class Network {
@@ -28,7 +25,6 @@ public class Network {
             con = DriverManager.getConnection(url, user, password);
             util.getLogger().info("База данных подключена!");
 
-
         } catch (SQLException sqlEx) {
 
             sqlEx.printStackTrace();
@@ -45,7 +41,7 @@ public class Network {
 
             preparedStatements.put("addBalance", con.prepareStatement(
 
-                    "UPDATE INTO `alteconomy` (player, type, value) VALUES (?,?,?)"));
+                    "UPDATE `alteconomy` SET `value`=? WHERE `player`=? AND `type`=?"));
 
             preparedStatements.put("getBalance", con.prepareStatement(
 
@@ -54,8 +50,67 @@ public class Network {
             preparedStatements.put("addPlayer", con.prepareStatement(
 
                     "INSERT INTO `alteconomy` (player) VALUES (?);"));
+
+            preparedStatements.put("addCurrency", con.prepareStatement(
+
+                    "ALTER TABLE `alteconomy` ADD `type`=? FLOAT;"));
         }
     }
 
+    public void addPlayer(String player) {
+        try {
 
+            PreparedStatement addPlayer = preparedStatements.get("addPlayer");
+            addPlayer.setString(1, player);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addCurrency(String currencyType) {
+        try {
+
+            PreparedStatement addCurrency = preparedStatements.get("addCurrency");
+            addCurrency.setString(1, currencyType);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public float getBalance(String player,String currencyType) {
+        try {
+
+            PreparedStatement getBalance = preparedStatements.get("getBalance");
+            getBalance.setString(1, player);
+            getBalance.setString(2, currencyType);
+
+            ResultSet rs = getBalance.executeQuery();
+
+            if (rs.next()) {
+                return rs.getFloat(currencyType);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public void addBalance(String player, String currencyType, Float value) {
+
+        try {
+
+            PreparedStatement addBalance = preparedStatements.get("addBalance");
+            addBalance.setFloat(2, getBalance(player, currencyType) + value);
+            addBalance.setString(2, player);
+            addBalance.setString(3, currencyType);
+            addBalance.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
