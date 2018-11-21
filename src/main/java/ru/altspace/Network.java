@@ -55,7 +55,7 @@ public class Network {
 
                     "INSERT INTO `alteconomy` (player) VALUES (?);"));
         }
-
+        //erf
     }
 
 
