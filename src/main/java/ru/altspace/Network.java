@@ -57,7 +57,7 @@ public class Network {
         }
     }
 
-    public void addPlayer(String player) {
+    public void addPlayer(final String player) {
         try {
 
             PreparedStatement addPlayer = preparedStatements.get("addPlayer");
@@ -68,18 +68,20 @@ public class Network {
         }
     }
 
-    public void addCurrency(String currencyType) {
+    public boolean addCurrency(final String currencyType) {
         try {
 
             PreparedStatement addCurrency = preparedStatements.get("addCurrency");
             addCurrency.setString(1, currencyType);
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    public float getBalance(String player,String currencyType) {
+    public float getBalance(final String player,final String currencyType) {
         try {
 
             PreparedStatement getBalance = preparedStatements.get("getBalance");
@@ -99,7 +101,7 @@ public class Network {
         return 0;
     }
 
-    public void addBalance(String player, String currencyType, Float value) {
+    public void addBalance(final String player,final String currencyType,final Float value) {
 
         try {
 

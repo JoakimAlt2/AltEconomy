@@ -8,6 +8,11 @@ public class AltEconomy extends JavaPlugin {
 
     Utils util = new Utils();
     Network network = new Network();
+    private static AltEconomy inst;
+
+    public AltEconomy(){
+        final AltEconomy plugin = inst = this;
+    }
 
     @Override
     public void onEnable() {
@@ -17,7 +22,9 @@ public class AltEconomy extends JavaPlugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        util.loadCurencies();
         util.getLogger().info("Плагин включен!!");
+
     }
 
     @Override
