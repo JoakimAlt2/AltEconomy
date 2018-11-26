@@ -25,4 +25,5 @@ public class Currency {
             return true;
         } else return false;
     }
+    public static List<String> getCurList() { return curencies;}
 }

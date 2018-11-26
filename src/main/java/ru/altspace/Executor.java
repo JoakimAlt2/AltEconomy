@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Executor implements CommandExecutor {
 
@@ -30,6 +31,39 @@ public class Executor implements CommandExecutor {
                     }
                 } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
             } else sender.sendMessage("[AltEconomy]: Игрок не онлайн!");
+        }
+
+        if(cmd.getName().equalsIgnoreCase("carlist") && args.length == 1){
+            if(sender instanceof Player){
+                Player pl = (Player) sender;
+                pl.sendMessage("[AltEconomy]: Список валют:");
+                for(String cur : cur.getCurList()){
+                    pl.sendMessage("- " + cur);
+                }
+                return true;
+            }
+        }
+
+        if(cmd.getName().equalsIgnoreCase("cur") && (args.length == 2 || args.length == 3)) {
+            if(args.length == 2){
+                if(cur.isAdded(args[1])) {
+                    if(sender instanceof Player){
+                        Player pl = (Player) sender;
+                        if(cur.isAdded(args[1])) {
+                            pl.sendMessage("Ваш баланс по данной валюте:" + network.getBalance(pl.getName(), args[1]));
+                        } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
+                    }
+                }
+            } else {
+                if(Bukkit.getPlayer(args[2]) != null) {
+                    if(sender instanceof Player){
+                        Player pl = (Player) sender;
+                        if(cur.isAdded(args[1])) {
+                            pl.sendMessage("Баланс игрока по данной валюте:" + network.getBalance(args[2], args[1]));
+                        } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
+                    }
+                } else sender.sendMessage("[AltEconomy]: Игрок не онлайн!");
+            }
         }
         return false;
     }
