@@ -21,9 +21,9 @@ public class Currency {
         curencies.add(name);
     }
     public static boolean isAdded(final String name) {
-        if(curencies.contains(name)){
-            return true;
-        } else return false;
+        return curencies.contains(name);
+
+
     }
     public static List<String> getCurList() { return curencies;}
 }
