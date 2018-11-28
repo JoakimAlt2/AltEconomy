@@ -33,7 +33,7 @@ public class Executor implements CommandExecutor {
             } else sender.sendMessage("[AltEconomy]: Игрок не онлайн!");
         }
 
-        if(cmd.getName().equalsIgnoreCase("carlist") && args.length == 1){
+        if(cmd.getName().equalsIgnoreCase("curlist") && args.length == 1){
             if(sender instanceof Player){
                 Player pl = (Player) sender;
                 pl.sendMessage("[AltEconomy]: Список валют:");

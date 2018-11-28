@@ -3,4 +3,11 @@ version: 0.0.0.005
 description: AltEcononmy
 main: main.java.ru.altspace.AltEconomy
 authors: [AltSpace]
+commands:
+  cur:
+    permission: alteconomy.cur
+  pay:
+    permission: alteconomy.pay
+  curlist:
+    permission: alteconomy.curlist
 
