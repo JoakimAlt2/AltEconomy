@@ -23,13 +23,14 @@ public class AltEconomy extends JavaPlugin {
             e.printStackTrace();
         }
         util.loadCurencies();
-        util.getLogger().info("Плагин включен!!");
+        util.getLogger().info("Plugin is enabled!");
+        System.out.println("Ky");
 
     }
 
     @Override
     public void onDisable() {
-        util.getLogger().info("Плагин выключен!");
+        util.getLogger().info("Plugin is disabled");
     }
 
     private void loadConfig() {
@@ -38,6 +39,8 @@ public class AltEconomy extends JavaPlugin {
         reloadConfig();
 
         System.out.println("Loading config...");
-        util.getLogger().info("Загрузка конфига...");
+        util.getLogger().info("Loading config...");
     }
+
+    public static void main(String args[]){}
 }

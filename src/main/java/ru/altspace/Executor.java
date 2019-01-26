@@ -11,6 +11,8 @@ public class Executor implements CommandExecutor {
     private static AltEconomy altEconomy = new AltEconomy();
     private static Network network = new Network();
     private static Currency cur = new Currency();
+    private static Utils ut = new Utils();
+    private static Language ln = new Language();
 
 
     @Override
@@ -23,20 +25,20 @@ public class Executor implements CommandExecutor {
                     try {
                         value = Float.valueOf(args[3]);
                     } catch (NumberFormatException e) {
-                        sender.sendMessage("[AltEconomy]: Используйте /pay [player] [currencyType] [value]");
+                        sender.sendMessage("[AltEconomy]: " + ln.getTUse() +" /pay [player] [currencyType] [value]");
                     }
                     if(value != null) {
                         network.addBalance(args[1], args[2], value);
                         return true;
                     }
-                } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
-            } else sender.sendMessage("[AltEconomy]: Игрок не онлайн!");
+                } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
+            } else sender.sendMessage("[AltEconomy]: " + ln.getTPlayerIsNotOnline());
         }
 
         if(cmd.getName().equalsIgnoreCase("curlist") && args.length == 1){
             if(sender instanceof Player){
                 Player pl = (Player) sender;
-                pl.sendMessage("[AltEconomy]: Список валют:");
+                pl.sendMessage("[AltEconomy]: " + ln.getTCurList());
                 for(String cur : cur.getCurList()){
                     pl.sendMessage("- " + cur);
                 }
@@ -50,8 +52,8 @@ public class Executor implements CommandExecutor {
                     if(sender instanceof Player){
                         Player pl = (Player) sender;
                         if(cur.isAdded(args[1])) {
-                            pl.sendMessage("Ваш баланс по данной валюте:" + network.getBalance(pl.getName(), args[1]));
-                        } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
+                            pl.sendMessage(ln.getPlayerBalance(0) + network.getBalance(pl.getName(), args[1]));
+                        } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
                     }
                 }
             } else {
@@ -59,10 +61,20 @@ public class Executor implements CommandExecutor {
                     if(sender instanceof Player){
                         Player pl = (Player) sender;
                         if(cur.isAdded(args[1])) {
-                            pl.sendMessage("Баланс игрока по данной валюте:" + network.getBalance(args[2], args[1]));
-                        } else sender.sendMessage("[AltEconomy]: Введенная вами валюта не существует!");
+                            pl.sendMessage(ln.getPlayerBalance(1) + network.getBalance(args[2], args[1]));
+                        } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
                     }
-                } else sender.sendMessage("[AltEconomy]: Игрок не онлайн!");
+                } else sender.sendMessage("[AltEconomy]: " + ln.getTPlayerIsNotOnline());
+            }
+        }
+        if(cmd.getName().equalsIgnoreCase("setDefaultCur") && args.length == 2){
+            if(cur.isAdded(args[1])){
+                ut.setDefaultCur(args[1]);
+                return true;
+            } else if(sender instanceof Player){
+                Player pl = (Player) sender;
+                pl.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
+
             }
         }
         return false;

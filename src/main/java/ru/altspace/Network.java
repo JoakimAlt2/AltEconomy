@@ -23,12 +23,12 @@ public class Network {
 
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
-            util.getLogger().info("База данных подключена!");
+            util.getLogger().info("Database is not connecneted!");
 
         } catch (SQLException sqlEx) {
 
             sqlEx.printStackTrace();
-            util.getLogger().info("База данных не подключена!\n" + "Возможные причины:\n" + "-Неправильно введены данные(url: " + url + "; user: " + user + "password: " + password + "\n-Проблемы с интернет соединением");
+            util.getLogger().info("Database is not connecneted!\n" + "-check params(url: " + url + "; user: " + user + "password: " + password + "\n-Checl internet connection");
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -9,6 +9,7 @@ public class Currency {
     private static Network network = new Network();
     private static List<String> curencies = new ArrayList<String>();
 
+
     Currency(){
 
     }
@@ -25,5 +26,6 @@ public class Currency {
 
 
     }
-    public static List<String> getCurList() { return curencies;}
+    public static List<String> getCurList() { return curencies; }
+
 }
