@@ -18,7 +18,7 @@ public class Executor implements CommandExecutor {
     @Override
     public boolean onCommand(final CommandSender sender,final Command cmd,final String label,final String[] args) {
 
-        if(cmd.getName().equalsIgnoreCase("pay") && args.length == 4){
+        if(cmd.getName().equalsIgnoreCase("pay") && (args.length == 4) || (args.length == 3)){
             if(Bukkit.getPlayer(args[1]) != null){
                 if(cur.isAdded(args[2])) {
                     Float value = null;
@@ -46,7 +46,7 @@ public class Executor implements CommandExecutor {
             }
         }
 
-        if(cmd.getName().equalsIgnoreCase("cur") && (args.length == 2 || args.length == 3)) {
+        if(cmd.getName().equalsIgnoreCase("curs") && (args.length == 2 || args.length == 3)) {
             if(args.length == 2){
                 if(cur.isAdded(args[1])) {
                     if(sender instanceof Player){
@@ -69,12 +69,18 @@ public class Executor implements CommandExecutor {
         }
         if(cmd.getName().equalsIgnoreCase("setDefaultCur") && args.length == 2){
             if(cur.isAdded(args[1])){
-                ut.setDefaultCur(args[1]);
+                cur.setDefaultCur(args[1]);
                 return true;
             } else if(sender instanceof Player){
                 Player pl = (Player) sender;
                 pl.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
 
+            }
+        }
+        if(cmd.getName().equalsIgnoreCase("addCur")) {
+            if(args.length == 2 && args[1] != null && !cur.isAdded(args[1])) {
+                cur.addCurrency(args[1]);
+                return true;
             }
         }
         return false;

@@ -8,6 +8,7 @@ public class AltEconomy extends JavaPlugin {
 
     Utils util = new Utils();
     Network network = new Network();
+    Currency cur = new Currency();
     private static AltEconomy inst;
 
     public AltEconomy(){
@@ -22,7 +23,7 @@ public class AltEconomy extends JavaPlugin {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        util.loadCurencies();
+        cur.loadCurencies();
         util.getLogger().info("Plugin is enabled!");
         System.out.println("Ky");
 
