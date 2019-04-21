@@ -5,12 +5,9 @@ import java.util.logging.Logger;
 
 public class Utils {
 
-    private static AltEconomy altEconomy = new AltEconomy();
-    private static Logger logger = Logger.getLogger("AltEconomy");
-    private static Network network = new Network();
-    private static Currency cur = new Currency();
+    private static Logger logger = AltEconomy.INSTANCE.getLogger();
 
-    public static Logger getLogger() {
+    static Logger getLogger() {
         return logger;
     }
 

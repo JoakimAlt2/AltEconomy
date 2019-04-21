@@ -1,21 +1,24 @@
 package ru.altspace;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
 public class Language {
 
-    private AltEconomy altEconomy = new AltEconomy();
-    public String df = getDefaultLanguage();
+    public static String df = getDefaultLanguage();
+    private static FileConfiguration cfg = AltEconomy.INSTANCE.getConfig();
+    private static String getDefaultLanguage () { return  cfg.getString("Language.default"); }
 
-    private String getDefaultLanguage () { return  altEconomy.getConfig().getString("Language.default"); }
-    public String getPlayerBalance (Integer nm) {
+    public static String getTCurCheckExeption () { return cfg.getString("Language." + df + ".CurCheckExeption"); }
+    public static String getTPlayerIsNotOnline () { return cfg.getString("Language." + df + ".PlayerIsNotOnline"); }
+    public static String getTCurList () { return  cfg.getString("Language." + df + ".CurList"); }
+    public static String getTUse () { return cfg.getString("Language." + df + ".Use"); }
+
+    public static String getPlayerBalance (int nm) {
         if(nm == 0) {
-            return altEconomy.getConfig().getString("Language." + df + ".PlayerBalance.another_player");
+            return cfg.getString("Language." + df + ".PlayerBalance.another_player");
         } else if(nm == 1) {
-            return altEconomy.getConfig().getString("Language." + df + ".PlayerBalance.you");
+            return cfg.getString("Language." + df + ".PlayerBalance.you");
         }
         return "%LanguageExeption%";
     }
-    public String getTCurCheckExeption () { return altEconomy.getConfig().getString("Language." + df + ".CurCheckExeption"); }
-    public String getTPlayerIsNotOnline () { return altEconomy.getConfig().getString("Language." + df + ".PlayerIsNotOnline"); }
-    public String getTCurList () { return  altEconomy.getConfig().getString("Language." + df + ".CurList"); }
-    public String getTUse () { return altEconomy.getConfig().getString("Language." + df + ".Use"); }
 }
