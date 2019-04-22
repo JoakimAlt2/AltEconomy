@@ -1,42 +1,45 @@
 package ru.altspace;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Currency {
 
-    private static AltEconomy altEconomy = new AltEconomy();
     private static Network network = new Network();
     private static List<String> curencies = new ArrayList<String>();
-    private static String nameOfDefaultCur = null;
+    private static String nameOfDefaultCur;
 
-    Currency(){
-
-    }
 /* временно не нужно
     Currency(final String name) {
         if(name.equals(nameOfDefaultCur)) { }
     }
 */
-    public void add(final String name) {
+    private static void add(String name) {
         curencies.add(name);
     }
-    public boolean isAdded(final String name) {
+
+    public static boolean isAdded( String name) {
         return curencies.contains(name);
     }
-    public List<String> getCurList() { return curencies; }
-    public void loadCurencies() {
-        for(String name : altEconomy.getConfig().getStringList("currencies")) {
+    public static List<String> getCurList() { return curencies; }
+
+    public static void loadCurencies() {
+        FileConfiguration cfg = AltEconomy.INSTANCE.getConfig();
+        for(String name : cfg.getStringList("currencies")) {
             if(!isAdded(name)) {
                 add(name);
             }
         }
-        if(altEconomy.getConfig().getString("defaultcur") != null)
-        { nameOfDefaultCur = altEconomy.getConfig().getString("defaultcur"); }
+        if(cfg.getString("defaultcur") != null)
+        { nameOfDefaultCur = cfg.getString("defaultcur"); }
     }
-    public void setDefaultCur(String name) { if (isAdded(name)) { altEconomy.getConfig().set("defaultcur", name); } }
-    public void addCurrency(final String name) {
-        add(name);
+
+    public static void setDefaultCur(String name) { if (isAdded(name)) { AltEconomy.INSTANCE.getConfig().set("defaultcur", name); } }
+
+    public static void addCurrency(String name) {
+        Currency.add(name);
         network.addCurrency(name);
     }
 }

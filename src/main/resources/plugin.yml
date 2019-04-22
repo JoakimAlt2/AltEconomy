@@ -6,8 +6,12 @@ authors: [AltSpace]
 commands:
   cur:
     permission: alteconomy.cur
+    permission-message: You dont have permissions!
   pay:
     permission: alteconomy.pay
+    permission-message: You dont have permissions!
+    usage: /pay [player] [currencyType] [value]
   curlist:
     permission: alteconomy.curlist
+    permission-message: You dont have permissions!
 

@@ -8,38 +8,38 @@ import org.bukkit.entity.Player;
 
 public class Executor implements CommandExecutor {
 
-    private static AltEconomy altEconomy = new AltEconomy();
-    private static Network network = new Network();
-    private static Currency cur = new Currency();
-    private static Utils ut = new Utils();
-    private static Language ln = new Language();
-
-
     @Override
-    public boolean onCommand(final CommandSender sender,final Command cmd,final String label,final String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+        final String prefix = "[AltEconomy]: ";
+
+        //Хуйня редкостная, нахуй они нужны - не ясно
+        Network network = new Network();
 
         if(cmd.getName().equalsIgnoreCase("pay") && (args.length == 4) || (args.length == 3)){
             if(Bukkit.getPlayer(args[1]) != null){
-                if(cur.isAdded(args[2])) {
+                if(Currency.isAdded(args[2])) {
+
+                    //Не примитивный тип float? Што?
                     Float value = null;
                     try {
                         value = Float.valueOf(args[3]);
                     } catch (NumberFormatException e) {
-                        sender.sendMessage("[AltEconomy]: " + ln.getTUse() +" /pay [player] [currencyType] [value]");
+                        sender.sendMessage(prefix + Language.getTUse() +" /pay [player] [currencyType] [value]");
                     }
                     if(value != null) {
                         network.addBalance(args[1], args[2], value);
                         return true;
                     }
-                } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
-            } else sender.sendMessage("[AltEconomy]: " + ln.getTPlayerIsNotOnline());
+                } else sender.sendMessage(prefix + Language.getTCurCheckExeption());
+            } else sender.sendMessage(prefix + Language.getTPlayerIsNotOnline());
         }
 
         if(cmd.getName().equalsIgnoreCase("curlist") && args.length == 1){
             if(sender instanceof Player){
                 Player pl = (Player) sender;
-                pl.sendMessage("[AltEconomy]: " + ln.getTCurList());
-                for(String cur : cur.getCurList()){
+                pl.sendMessage(prefix + Language.getTCurList());
+                for(String cur : Currency.getCurList()){
                     pl.sendMessage("- " + cur);
                 }
                 return true;
@@ -48,38 +48,38 @@ public class Executor implements CommandExecutor {
 
         if(cmd.getName().equalsIgnoreCase("curs") && (args.length == 2 || args.length == 3)) {
             if(args.length == 2){
-                if(cur.isAdded(args[1])) {
+                if(Currency.isAdded(args[1])) {
                     if(sender instanceof Player){
                         Player pl = (Player) sender;
-                        if(cur.isAdded(args[1])) {
-                            pl.sendMessage(ln.getPlayerBalance(0) + network.getBalance(pl.getName(), args[1]));
-                        } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
+                        if(Currency.isAdded(args[1])) {
+                            pl.sendMessage(Language.getPlayerBalance(0) + network.getBalance(pl.getName(), args[1]));
+                        } else sender.sendMessage(prefix + Language.getTCurCheckExeption());
                     }
                 }
             } else {
                 if(Bukkit.getPlayer(args[2]) != null) {
                     if(sender instanceof Player){
                         Player pl = (Player) sender;
-                        if(cur.isAdded(args[1])) {
-                            pl.sendMessage(ln.getPlayerBalance(1) + network.getBalance(args[2], args[1]));
-                        } else sender.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
+                        if(Currency.isAdded(args[1])) {
+                            pl.sendMessage(Language.getPlayerBalance(1) + network.getBalance(args[2], args[1]));
+                        } else sender.sendMessage(prefix + Language.getTCurCheckExeption());
                     }
-                } else sender.sendMessage("[AltEconomy]: " + ln.getTPlayerIsNotOnline());
+                } else sender.sendMessage(prefix + Language.getTPlayerIsNotOnline());
             }
         }
         if(cmd.getName().equalsIgnoreCase("setDefaultCur") && args.length == 2){
-            if(cur.isAdded(args[1])){
-                cur.setDefaultCur(args[1]);
+            if(Currency.isAdded(args[1])){
+                Currency.setDefaultCur(args[1]);
                 return true;
             } else if(sender instanceof Player){
                 Player pl = (Player) sender;
-                pl.sendMessage("[AltEconomy]: " + ln.getTCurCheckExeption());
+                pl.sendMessage(prefix + Language.getTCurCheckExeption());
 
             }
         }
         if(cmd.getName().equalsIgnoreCase("addCur")) {
-            if(args.length == 2 && args[1] != null && !cur.isAdded(args[1])) {
-                cur.addCurrency(args[1]);
+            if(args.length == 2 && args[1] != null && !Currency.isAdded(args[1])) {
+                Currency.addCurrency(args[1]);
                 return true;
             }
         }
